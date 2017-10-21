@@ -462,11 +462,11 @@ public class FileController {
 		}
 	 
 	 
-	 public  String downloadFile(final HttpServletRequest request, final HttpServletResponse response) {
+	 @RequestMapping(value = "/fileDownload", method = RequestMethod.GET)
+	 public  String downloadFile(@ModelAttribute FileUpload fileUpload, final HttpServletRequest request, final HttpServletResponse response) {
 
-			
 			String existingBucketName  = "myapp-content"; 
-		    String keyName             = "SampleCloud";
+		    String keyName             = fileUpload.getFileName();
 	        AmazonS3 s3Client = new AmazonS3Client(new ProfileCredentialsProvider());
 	        try {
 	        	 S3Object o = s3Client.getObject(existingBucketName, keyName);
@@ -501,7 +501,7 @@ public class FileController {
 	        	    
 	        	    try {
 	        	    	response.setContentType("application/text");
-	    	    		response.setHeader("Content-Disposition", "filename=\"THE FILE NAME\"");
+	    	    		response.setHeader("Content-Disposition", "filename="+keyName);
 	    	    		response.setContentLength(read_buf.length);
 	        	        OutputStream os = response.getOutputStream();
 	        	        byte[] buf = new byte[8192];

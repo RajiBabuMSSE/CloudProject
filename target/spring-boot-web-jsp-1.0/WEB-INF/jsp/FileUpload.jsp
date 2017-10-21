@@ -81,9 +81,19 @@ function bodyAppend(tagName, innerHTML) {
     document.body.appendChild(elm);
 }
 
-function downloadFile(fileNAme){
+function downloadFile(fileName){
 	
-	alert('hello' +fileNAme);
+	
+	
+	document.getElementById("fileName").value = fileName;
+    document.fileDownload.submit();
+	//alert(this.getElementById('tableFiles'));
+	
+//	var print = currentElement.getElementById('tableFiles');
+//	alert(currentElement + 'hello');
+
+
+//	alert('hello' +fileNAme);
 	//alert(this.getElementById('tableFiles'));
 	
 //	var print = currentElement.getElementById('tableFiles');
@@ -120,7 +130,8 @@ Description:
 		
 		<tr>
 	
-		<td><a href="#" onclick="'javascript:downloadFile(\'' + ${fileUpload.fileName} + '\');'">${fileUpload.fileName}</a>
+		<td>
+		<a href="#" onclick="downloadFile('${fileUpload.fileName}');">${fileUpload.fileName}</a>
 		</td>
 		<td>${fileUpload.description}
 		</td><td>${fileUpload.uploadedOn}
@@ -131,6 +142,9 @@ Description:
     </c:forEach>
 </table>
 
+    <form name= "fileDownload"  action="fileDownload" method="get">
+    <input type="hidden" id=fileName name="fileName" />
+    </form>
 
 	
 </body>
