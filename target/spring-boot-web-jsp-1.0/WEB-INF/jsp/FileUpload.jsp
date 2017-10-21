@@ -80,6 +80,17 @@ function bodyAppend(tagName, innerHTML) {
     elm.innerHTML = innerHTML;
     document.body.appendChild(elm);
 }
+
+function downloadFile(fileNAme){
+	
+	alert('hello' +fileNAme);
+	//alert(this.getElementById('tableFiles'));
+	
+//	var print = currentElement.getElementById('tableFiles');
+//	alert(currentElement + 'hello');
+
+	
+}
 </script>
 </head>
 <body onload="prepopulateFields();load(17);">
@@ -87,26 +98,29 @@ function bodyAppend(tagName, innerHTML) {
 <input type = "file" name = "file" id="file" size = "50" />
 Description: 
  <input type="text" id="description" name="description" />
- UserId: 
-  <input type="text" id="userId" name="userId" />
-<input type='button' id='btnLoad' value='Load' onclick='showFileSize();'>
+
+<input type='button' id='btnLoad' value='Upload' onclick='showFileSize();'>
 </form>
 <br>
 <br>
 <br>
-<c:if test="${!empty fileUpload}">
-		
-		<table border="1">
+	 <table border="1" id="tableFiles">
 		<tr>
-		<td>FileName
+	
+		<td>FileName1
 		</td>
 		<td>Description
 		</td><td>UploadedOn
 		</td><td>UpdatedOn
 		</td>
 		</tr>
+			
+<c:forEach items="${fileUploadList}" var="fileUpload">
+       
+		
 		<tr>
-		<td>${fileUpload.fileName}
+	
+		<td><a href="#" onclick="'javascript:downloadFile(\'' + ${fileUpload.fileName} + '\');'">${fileUpload.fileName}</a>
 		</td>
 		<td>${fileUpload.description}
 		</td><td>${fileUpload.uploadedOn}
@@ -114,6 +128,10 @@ Description:
 		</td>
 		</tr>
 
-	</c:if>
+    </c:forEach>
+</table>
+
+
+	
 </body>
 </html>

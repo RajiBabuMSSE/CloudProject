@@ -7,6 +7,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +36,8 @@ public class LoginController {
 	}
 	
 	@RequestMapping("/login")
-	public String login(Map<String, Object> model, @ModelAttribute Login login) {
+	public String login(Map<String, Object> model, @ModelAttribute Login login,HttpServletRequest request,
+			HttpServletResponse response) {
 		String redirectPage = "FileUpload";
 		login.getPassword();
 		login.getUserID();
@@ -73,7 +79,16 @@ public class LoginController {
 	    }
 		    if(!resultSet.first()){
 		    	model.put("message", "error");
-		    	redirectPage = "Error";
+		    	return redirectPage = "error";
+		    }
+		    else{
+		    	HttpSession session = request.getSession();
+				session.setAttribute("user", login.getUserID());
+				//setting session to expiry in 30 mins
+				session.setMaxInactiveInterval(30*60);
+				Cookie userName = new Cookie("user", login.getUserID());
+				userName.setMaxAge(30*60);
+				response.addCookie(userName);
 		    }
 		  } catch (SQLException ex) {
 			    // Handle any errors

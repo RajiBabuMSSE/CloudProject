@@ -1,0 +1,23 @@
+http://docs.aws.amazon.com/toolkit-for-eclipse/v1/user-guide/welcome.html
+
+
+http://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-install.html
+
+
+what is the difference?
+
+
+
+
+Uploading file in single part(5MB) and multipart (>5MB < 5TB)
+
+Low-level API
+High-level API
+
+
+To view your Amazon EC2 key pairs in the AWS Toolkit for Eclipse and associate private keys with them
+
+http://docs.aws.amazon.com/toolkit-for-eclipse/v1/user-guide/setup-keypairs.html
+
+
+ 
