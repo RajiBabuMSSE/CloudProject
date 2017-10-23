@@ -8,7 +8,7 @@
 </head>
 <body>
 <hr/>  
-  
+  <div align="center">
 <h3>Login Form</h3>  
 <%  
 String profile_msg=(String)request.getAttribute("profile_msg");  
@@ -25,6 +25,8 @@ out.print(login_msg);
 UserID:<input type="text" name="userID"/><br/><br/>  
 Password:<input type="password" name="password"/><br/><br/>  
 <input type="submit" value="Login"/>
-</form>  
+</form> 
+
+<div> 
 </body>
 </html>

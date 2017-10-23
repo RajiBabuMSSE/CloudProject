@@ -6,6 +6,13 @@ public class FileUpload {
 	private String fileName;
 	private String uploadedOn;
 	private String updatedOn;
+	private String fileNameToDelete;
+	public String getFileNameToDelete() {
+		return fileNameToDelete;
+	}
+	public void setFileNameToDelete(String fileNameToDelete) {
+		this.fileNameToDelete = fileNameToDelete;
+	}
 	public String getDescription() {
 		return description;
 	}

@@ -46,7 +46,7 @@ public class LoginController {
 		Connection conn = null;
 		  Statement setupStatement = null;
 
-
+        String userName=null;
 		  try {
 		    // Create connection to RDS DB instance
 		    conn = JDBCDBConnection.getRemoteConnection();
@@ -54,7 +54,7 @@ public class LoginController {
 			  ResultSet resultSet = null;
 		    // Create a table and write two rows
 		    setupStatement = conn.createStatement();
-		    String selectQuery = "Select user_id from user_profile where user_id = ? and user_password = ?";
+		    String selectQuery = "Select user_id, user_first_name from user_profile where user_id = ? and user_password = ?";
 		    PreparedStatement prepStmt = conn.prepareStatement(selectQuery);
 		    prepStmt.setString(1, login.getUserID());
 		    prepStmt.setString(2, login.getPassword());
@@ -70,10 +70,11 @@ public class LoginController {
 		    
 		    logger.info(resultSet.first());
 		    
-		    while (resultSet.next()) {              
+		    if (resultSet.first()) {              
 
+		    	userName = resultSet.getString("user_first_name");
 	            System.out.println(resultSet.getString("user_id"));
-	            System.out.println(resultSet.getString("user_password"));
+	           
 	           /* System.out.println(resultSet.getString("Col 3"));                    
 	            System.out.println(resultSet.getString("Col n"));*/
 	    }
@@ -84,11 +85,12 @@ public class LoginController {
 		    else{
 		    	HttpSession session = request.getSession();
 				session.setAttribute("user", login.getUserID());
+				session.setAttribute("userName", userName);
 				//setting session to expiry in 30 mins
 				session.setMaxInactiveInterval(30*60);
-				Cookie userName = new Cookie("user", login.getUserID());
-				userName.setMaxAge(30*60);
-				response.addCookie(userName);
+				Cookie userNameCookie = new Cookie("userName", login.getUserID());
+				userNameCookie.setMaxAge(30*60);
+				response.addCookie(userNameCookie);
 		    }
 		  } catch (SQLException ex) {
 			    // Handle any errors
@@ -102,6 +104,15 @@ public class LoginController {
 		
 		  
 		return "forward:/getUserContentById";
+	}
+	
+	@RequestMapping("/logout")
+	public String logout(Map<String, Object> model, @ModelAttribute Login login,HttpServletRequest request,
+			HttpServletResponse response) {
+				
+		request.getSession().invalidate(); 
+		String userName = (String)request.getSession().getAttribute("user");
+		return "Login";
 	}
 	
 }
