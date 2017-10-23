@@ -134,21 +134,21 @@ public class FileController {
 	
 	 @RequestMapping(value = "/fileUpload", method = RequestMethod.POST)	 
 	
-	 
+	 /*
 	 public String uploadFile(@RequestParam("file") MultipartFile multipartile, @ModelAttribute FileUpload fileUpload,HttpServletRequest request) throws InterruptedException, IOException {
 		 
 		 
-		/* AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
+		 AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
 		                         .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
 		                         .build();
-		 s3Client.setRegion(Region.getRegion(Regions.US_WEST_1));*/
+		 s3Client.setRegion(Region.getRegion(Regions.US_WEST_1));
 		 
 		 BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey, secretKey);
 		 AmazonS3 s3Client = AmazonS3Client.builder().withRegion("us-west-1").withCredentials(new AWSStaticCredentialsProvider(awsCreds))
                  .build();
 		 
-		/* AmazonS3Client s3Client = new AmazonS3Client(new ProfileCredentialsProvider());
-	        s3Client.configureRegion(Regions.US_WEST_1);*/
+		 AmazonS3Client s3Client = new AmazonS3Client(new ProfileCredentialsProvider());
+	        s3Client.configureRegion(Regions.US_WEST_1);
 		  //AmazonS3Client s3Client = new AmazonS3Client(new ProfileCredentialsProvider());
 	       // s3Client.configureRegion(Regions.US_WEST_1);
 	        String existingBucketName  = "myapp-content"; 
@@ -180,7 +180,7 @@ public class FileController {
 	        return "forward:/getUserContentById";
 	 }
 	 
-	 
+	 */
 	 
 	 public String uploadFileHandler(@RequestParam("file") MultipartFile multipartile, @ModelAttribute FileUpload fileUpload,HttpServletRequest request) throws Exception {   
 		 updateUserContentDB(request, multipartile,  fileUpload);
@@ -292,7 +292,7 @@ public class FileController {
 	 }
 	 private File convertFromMultiPart(MultipartFile multipartFile) throws IOException {
 
-			File file = new File("/tmp" + multipartFile.getOriginalFilename());
+		 File file = new File(multipartFile.getOriginalFilename());
 			file.createNewFile(); 
 			FileOutputStream fos = new FileOutputStream(file); 
 			fos.write(multipartFile.getBytes());
